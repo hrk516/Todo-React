@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from './assets/vite.svg';
-import heroImg from './assets/hero.png';
+import { InputTodo } from "./component/InputTodo";
+import { IncompleteTodo } from "./component/IncompleteTodo";
+import { CompleteTodo } from "./component/CompleteTodo";
 
 export function Todo() {
 {/** useState ------------------------------------------------------------- */}
@@ -52,45 +52,22 @@ export function Todo() {
 {/** return --------------------------------------------------------------- */}
   return (
     <>
-      <div className="input-area">
-        <input placeholder="TODOを入力" value={todoText} onChange={onChangeTodoText}/>
-        <button onClick={onClickAdd}>追加</button>
-      </div>
+      <InputTodo 
+        todoText={todoText}
+        onChangeTodoText={onChangeTodoText}
+        onClickAdd={onClickAdd}
+      />
 
-      <div className="incomplete-area">
-        <p className="title">未完了のTODO</p>
-        <ul>
-          {incompleteTodos.map((todo,index) => 
-          (
-              <li key={todo}> 
-              {/** mapやfilterを使うときは初めの要素に一意となるkeyが必要 
-               * 変更の差分を出力する為今どの要素か把握する必要がある*/}
-                <div className="list-row">
-                  <p className="todo-item">{todo}</p>
-                  <button onClick={() => onClickComplete(index)}>完了</button>
-                  <button onClick={() => onClickDelete(index)}>削除</button>
-                </div>
-              </li>
-            )
-          )}
-        </ul>
-      </div>
+      <IncompleteTodo 
+        incompleteTodos={incompleteTodos}
+        onClickComplete={onClickComplete}
+        onClickDelete={onClickDelete}
+      />
 
-      <div className="complete-area">
-        <p className="title">完了のTODO</p>
-        <ul>
-          {completeTodos.map((todo,index) =>
-           (
-            <li key={todo}>
-              <div className="list-row">
-                <p className="todo-item">{todo}</p>
-                <button onClick={() => onClickRemove(index)}>戻す</button>
-              </div>
-            </li>
-          )
-        )}
-        </ul>
-      </div>
+      <CompleteTodo
+        completeTodos={completeTodos}
+        onClickRemove={onClickRemove}
+      />
     </>
   );
 }
