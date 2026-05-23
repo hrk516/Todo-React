@@ -48,6 +48,8 @@ export function Todo() {
     setCompleteTodos(newCompleteTodos);
   }
 
+  /** 数制限の関数 */
+  const isMaxLimitIncompleteTodos = incompleteTodos.length >= 5;
 
 {/** return --------------------------------------------------------------- */}
   return (
@@ -56,11 +58,11 @@ export function Todo() {
         todoText={todoText}
         onChangeTodoText={onChangeTodoText}
         onClickAdd={onClickAdd}
-        disabled={incompleteTodos.length >= 5}
+        disabled={isMaxLimitIncompleteTodos}
       />
 
       {/** 未完了タスクに数制限をかける */}
-      {incompleteTodos.length >= 5 && (
+      {isMaxLimitIncompleteTodos && (
         <p style={{ color: "red" }}>登録できるのは5個までやけん消化しろよ〜。</p>
       )}
 
