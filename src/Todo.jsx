@@ -56,7 +56,13 @@ export function Todo() {
         todoText={todoText}
         onChangeTodoText={onChangeTodoText}
         onClickAdd={onClickAdd}
+        disabled={incompleteTodos.length >= 5}
       />
+
+      {/** 未完了タスクに数制限をかける */}
+      {incompleteTodos.length >= 5 && (
+        <p style={{ color: "red" }}>登録できるのは5個までやけん消化しろよ〜。</p>
+      )}
 
       <IncompleteTodo 
         incompleteTodos={incompleteTodos}

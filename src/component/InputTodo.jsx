@@ -9,11 +9,11 @@ const InputStyle = {
 }
 
 export const InputTodo = (props) =>{
-    const { todoText, onChangeTodoText, onClickAdd} = props; // 分割代入
+    const { todoText, onChangeTodoText, onClickAdd, disabled} = props; // 分割代入
     return (
         <div style={InputStyle}>
-        <input placeholder="TODOを入力" value={todoText} onChange={onChangeTodoText}/>
-        <button onClick={onClickAdd}>追加</button>
+        <input disabled={disabled} placeholder="TODOを入力" value={todoText} onChange={onChangeTodoText}/>
+        <button disabled={disabled} onClick={onClickAdd}>追加</button>
       </div>
     )
 }
