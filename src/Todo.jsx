@@ -10,20 +10,34 @@ export function Todo() {
   const [completeTodos, setCompleteTodos] = useState(["TODO-1","TODO-2"]);
 
 {/** 関数 ------------------------------------------------------------------ */}
+  /** これがないとtextBoxに入力できない */
   const onChangeTodoText = (e) => setTodoText(e.target.value);
 
+  /** Todo追加関数 */
   const onClickAdd = () => {
-    if (todoText === "") return;
+    if (todoText === "") return; // textが未入力の場合何もしない
     const newTodos = [...incompleteTodos, todoText]; // ...スプレット構文(配列のコピー(newしてる))
     setIncompleteTodos(newTodos);
     setTodoText("");
   }
 
-  /** 対象のTODOを削除するためにmapの第二引数index(順位が入る)を引数に取る */
+  /** 削除関数 対象のTODOを削除するためにmapの第二引数index(順位が入る)を引数に取る */
   const onClickDelete = (index) => {
     const newTodos = [...incompleteTodos]; // 配列のnew
     newTodos.splice(index, 1); // splice(対象番目を, 何個)削除する
     setIncompleteTodos(newTodos); // setIncompleteTodosを更新する
+  }
+
+  /** 完了関数 */
+  const onClickComplete = (index) => {
+    const newIncompleteTodos = [...incompleteTodos];
+    newIncompleteTodos.splice(index, 1); // 未完了TODOから削除
+
+    const newCompleteTodos = [...completeTodos, incompleteTodos[index]]; // 対象の未完了を完了へ追加
+    setIncompleteTodos(newIncompleteTodos); // 更新する
+    setCompleteTodos(newCompleteTodos);
+
+
   }
 
 {/** return --------------------------------------------------------------- */}
@@ -44,7 +58,7 @@ export function Todo() {
                * 変更の差分を出力する為今どの要素か把握する必要がある*/}
                 <div className="list-row">
                   <p className="todo-item">{todo}</p>
-                  <button>完了</button>
+                  <button onClick={() => onClickComplete(index)}>完了</button>
                   <button onClick={() => onClickDelete(index)}>削除</button>
                 </div>
               </li>
