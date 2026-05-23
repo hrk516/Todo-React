@@ -21,7 +21,9 @@ export function Todo() {
 
   /** 対象のTODOを削除するためにmapの第二引数index(順位が入る)を引数に取る */
   const onClickDelete = (index) => {
-    alert(index);
+    const newTodos = [...incompleteTodos]; // 配列のnew
+    newTodos.splice(index, 1); // splice(対象番目を, 何個)削除する
+    setIncompleteTodos(newTodos); // setIncompleteTodosを更新する
   }
 
 {/** return --------------------------------------------------------------- */}
