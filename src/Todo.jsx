@@ -6,11 +6,11 @@ import heroImg from './assets/hero.png';
 export function Todo() {
 {/** useState ------------------------------------------------------------- */}
   const [todoText, setTodoText] = useState("");
-  const [incompleteTodos, setIncompleteTodos] = useState(["TODO1","TODO2"]);
-  const [completeTodos, setCompleteTodos] = useState(["TODO-1","TODO-2"]);
+  const [incompleteTodos, setIncompleteTodos] = useState([]);
+  const [completeTodos, setCompleteTodos] = useState([]);
 
 {/** 関数 ------------------------------------------------------------------ */}
-  /** これがないとtextBoxに入力できない */
+  /** これがないとtextBoxに入力できない useState("")空を初期値にしてるから */
   const onChangeTodoText = (e) => setTodoText(e.target.value);
 
   /** Todo追加関数 */
@@ -36,9 +36,18 @@ export function Todo() {
     const newCompleteTodos = [...completeTodos, incompleteTodos[index]]; // 対象の未完了を完了へ追加
     setIncompleteTodos(newIncompleteTodos); // 更新する
     setCompleteTodos(newCompleteTodos);
-
-
   }
+
+  /** 戻す関数 */
+  const onClickRemove = (index) => {
+    const newCompleteTodos = [...completeTodos];
+    newCompleteTodos.splice(index, 1); // 完了TODOから削除
+
+    const newIncompleteTodos = [...incompleteTodos, completeTodos[index]]; // 対象の完了を未完了へ追加
+    setIncompleteTodos(newIncompleteTodos); // 更新する
+    setCompleteTodos(newCompleteTodos);
+  }
+
 
 {/** return --------------------------------------------------------------- */}
   return (
@@ -70,12 +79,12 @@ export function Todo() {
       <div className="complete-area">
         <p className="title">完了のTODO</p>
         <ul>
-          {completeTodos.map((todo) =>
+          {completeTodos.map((todo,index) =>
            (
             <li key={todo}>
               <div className="list-row">
                 <p className="todo-item">{todo}</p>
-                <button>戻す</button>
+                <button onClick={() => onClickRemove(index)}>戻す</button>
               </div>
             </li>
           )
